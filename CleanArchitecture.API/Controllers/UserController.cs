@@ -30,8 +30,8 @@ namespace CleanArchitecture.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(string name)
         {
-           await mediator.Send(new CreateUserRequest { Name = name });
-           return Ok();
+            await mediator.Send(new CreateUserRequest { Name = name });
+            return Ok();
         }
 
         [HttpPost("update")]

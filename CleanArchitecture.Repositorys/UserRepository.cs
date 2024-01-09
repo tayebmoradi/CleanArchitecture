@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Interfaces;
+﻿using AutoMapper;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Persistence.Common;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,11 @@ namespace CleanArchitecture.Repositorys
     public class UserRepository : IUserRepository
     {
         private readonly DatabaseContext _databaseContext;
+        
         public UserRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
+            
         }
         public async Task<bool> AddUser(string name, CancellationToken cancellationToken)
         {
@@ -42,21 +45,18 @@ namespace CleanArchitecture.Repositorys
 
         public async Task<bool> UpdateUser(int Id, string Name, CancellationToken cancellationToken)
         {
-            var record = await _databaseContext.Users
-                .Where(x => x.Id == Id)
-                .FirstOrDefaultAsync(cancellationToken);
-           record.Name = Name;
-            
-            try
+            var record = _databaseContext.Users.Where(p => p.Id == Id).FirstOrDefault();
+
+            var user = new User()
             {
-                await _databaseContext.SaveChangesAsync(cancellationToken);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return false;
-            }
+                Id = record.Id,
+                Name = Name,
+            };
+            _databaseContext.Update(user);
+            await _databaseContext.SaveChangesAsync();
+            return true;
+
+
         }
     }
 }

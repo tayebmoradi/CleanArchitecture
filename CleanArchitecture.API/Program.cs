@@ -5,6 +5,7 @@ using CleanArchitecture.Persistence;
 using CleanArchitecture.Persistence.Common;
 using CleanArchitecture.Repositorys;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+//builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(AutoMapping)));
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

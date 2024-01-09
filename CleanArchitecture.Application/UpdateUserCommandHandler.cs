@@ -21,10 +21,10 @@ namespace CleanArchitecture.Application
         {
             this.mediator = mediator;
         }
-        public Task Handle(UpdateUserRequest request, CancellationToken cancellationToken)
+        public  Task Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
-           mediator.Publish(new UpdateUserEvent() { Id = request.Id ,UserName = request.UserName}); 
-           return Task.CompletedTask;
+             mediator.Publish(new UpdateUserEvent() { Id = request.Id ,UserName = request.UserName},cancellationToken); 
+            return Task.CompletedTask;
         }
         
     }
