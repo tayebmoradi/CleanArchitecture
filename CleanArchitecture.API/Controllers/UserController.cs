@@ -1,5 +1,6 @@
 using CleanArchitecture.Application;
 using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,13 @@ namespace CleanArchitecture.API.Controllers
         {
            await mediator.Send(new CreateUserRequest { Name = name });
            return Ok();
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateUser(User user)
+        {
+            await mediator.Send(new UpdateUserRequest { Id = user.Id,UserName = user.Name});
+            return Ok();
         }
     }
 }

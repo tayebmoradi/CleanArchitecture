@@ -11,5 +11,6 @@ namespace CleanArchitecture.Application.Interfaces
     {
         Task<List<User>> GetUsers(CancellationToken cancellationToken);
         Task<bool> AddUser(string name,CancellationToken cancellationToken);
+        Task<bool> UpdateUser(int Id, string Name, CancellationToken cancellationToken);
     }
 }

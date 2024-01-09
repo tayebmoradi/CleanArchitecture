@@ -39,5 +39,24 @@ namespace CleanArchitecture.Repositorys
             var record = await _databaseContext.Users.AsNoTracking().ToListAsync(cancellationToken);
             return record;
         }
+
+        public async Task<bool> UpdateUser(int Id, string Name, CancellationToken cancellationToken)
+        {
+            var record = await _databaseContext.Users
+                .Where(x => x.Id == Id)
+                .FirstOrDefaultAsync(cancellationToken);
+           record.Name = Name;
+            
+            try
+            {
+                await _databaseContext.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
     }
 }

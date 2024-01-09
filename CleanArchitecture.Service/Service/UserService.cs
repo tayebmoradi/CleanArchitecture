@@ -22,5 +22,8 @@ namespace CleanArchitecture.Domain.Service
 
         public async Task<List<User>> GetUsers(CancellationToken cancellationToken)
         => await _userRepository.GetUsers(cancellationToken);
+
+        public async Task<bool> UpdateUser(int Id, string Name, CancellationToken cancellationToken)
+        => await _userRepository.UpdateUser(Id,Name, cancellationToken);
     }
 }
